@@ -1,4 +1,7 @@
 
+mod structure;
+use structure::User;
+
 
 fn main() {
     println!("Hello, world!");
@@ -12,39 +15,21 @@ fn main() {
 
     let y : i32 = 5 ;
 
-     println!("Le résultat de y est de : {} et celui de x : {}", y , x);
+    println!("Le résultat de y est de : {} et celui de x : {}", y , x);
 
     calcul(x , y , typecalcul);
 
 
-    // Get an RNG:
-// let mut rng = rand::rng();
+    let mut user2  = User::build_user("eidowardo@gmail.com".to_string(),"eidowardo".to_string());
 
+    user2.userprint();
 
-
-// Generate and shuffle a sequence:
-// let mut nums: Vec<i32> = (1..4).collect();
-
-// nums.shuffle(&mut rng);
-
-// let value = nums.choose(&mut rng);
-
-// match value.copied() {
-//         Some(1) => println!("skibidi"),
-//         Some(2) => println!("bitch"),
-//         Some(3) => println!("jojo"),
-        
-//         // ⚠️ OBLIGATOIRE : Rust t'oblige à gérer le cas "Et si c'est vide ?"
-//         None => println!("La liste est vide !"),
-        
-//         // Le cas "Tout le reste" (si jamais ta liste avait un 4, 5...)
-//         _ => println!("Un autre nombre"),
-// }
-
-
+    
 
    
 }
+
+
 
 
 fn calcul(  x : i32 , y : i32 , calcul : &str) {
@@ -68,6 +53,8 @@ fn calcul(  x : i32 , y : i32 , calcul : &str) {
     
 }
 
+
+   
 
 
 

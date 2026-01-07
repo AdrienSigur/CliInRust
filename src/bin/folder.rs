@@ -8,7 +8,6 @@ use rand::prelude::*;
 
 fn main(){
 
-
     let args : Vec<String> = env::args().collect();
 
     if args.len() < 4 {
@@ -16,11 +15,12 @@ fn main(){
         return;
     }
 
+    
+
     let flag = &args[1];
     let path : &String = &args[2];
     let mode  = &args[3];
     
-   
     match (flag.as_str(), mode.as_str()){
 
         ("-path", "-random") => randomfile( path, &args),
@@ -28,10 +28,7 @@ fn main(){
         _ => println!("Invalid command or argument invalid")
 
     }
-
-
 }    
-
 
 fn randomfile( path : &String , dirs : &[String] ){
     
@@ -86,7 +83,6 @@ fn multiplefolder(path : &String , dirs : &[String]){
     
             return;
     }
-
 
 }
 
