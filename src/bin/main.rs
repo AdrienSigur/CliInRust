@@ -1,6 +1,9 @@
 
 mod structure;
-use structure::User;
+use structure::*;
+
+mod enum;
+use enum::*;
 
 
 fn main() {
@@ -24,13 +27,18 @@ fn main() {
 
     user2.userprint();
 
-    
+      let user3 = User {
+        email: String::from("another@example.com"),
+        ..user2
+    };
+     
+      user3.userprint();
 
-   
+
+
+
+      
 }
-
-
-
 
 fn calcul(  x : i32 , y : i32 , calcul : &str) {
     
