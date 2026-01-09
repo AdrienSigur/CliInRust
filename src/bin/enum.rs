@@ -1,14 +1,33 @@
-
 #[derive(Debug)]
+enum Weapon {
+    Epee ,
+    Arc ,
+    Baton , 
+    MainNue,
+    Morgeinsteirn
 
-enum Role {
-    Chevalier ,
-    Clerc , 
-    Pyromancien ,
-    Prisonnier ,
-    Necromancien,
-    Mendiant
 }
+
+
+
+impl Weapon {
+
+
+    fn weapondamage(&self) -> i32 {
+
+        match self {
+            Weapon::Epee => 10,
+            Weapon::Arc => 5 ,
+            Weapon::Morgeinsteirn => 12 ,
+            Weapon::MainNue => 2 ,
+            Weapon::Baton => 5
+        }
+    }
+}
+
+
+// Statistiques du personnage 
+
  #[derive(Debug)]
 struct Stats {
     Vig : i32 ,
@@ -21,11 +40,29 @@ struct Stats {
 
 impl Stats {
 
-    fn StatArray(&self) -> [i32 ; 6]{
+    fn IntStats(&self) -> [i32 ; 6]{
         [self.Vig , self.Force , self.End , self.Int , self.Dex , self.Luck]
     }
-}
 
+    fn StrStats() -> [String ; 6] {
+       ["Vigueur".to_string() , "Force".to_string() , "Endurance".to_string(), "Intelligence".to_string(), "Dexterity".to_string() ,"Luck".to_string() ]
+    }
+
+
+   
+}
+// Role du personnage 
+
+#[derive(Debug)]
+
+enum Role {
+    Chevalier ,
+    Clerc ,
+    Pyromancien,
+    Mendiant , 
+    Necromancien ,
+    Prisonnier
+}
 
 impl Role{
 
@@ -42,51 +79,88 @@ impl Role{
 
     }
 
+    fn Weaponclass(&self) -> Weapon {
+        match self {
+            Role::Chevalier => Weapon::Epee , 
+            Role::Clerc => Weapon::Baton,
+            Role::Mendiant => Weapon::MainNue,
+            Role::Prisonnier => Weapon::Morgeinsteirn,
+            Role::Pyromancien => Weapon::Arc,
+            Role::Necromancien => Weapon::Baton
+
+        }
+    }
+
+    
+
+      
 }
 
+
+// Personnage création 
 
 struct Personnage {
     hp : i32 , 
     nom : String ,
     classe : Role ,
+    arme : Weapon ,
+    stats : Stats
+    
 }
-
-
-
 
 impl Personnage {
 
     fn new(nom : String , classe : Role) -> Personnage {
 
-        let stat = classe.basicStats();
+        let arme = classe.Weaponclass();
+        let stats = classe.basicStats();
 
         Personnage {
-            hp : stat.Vig * 10 ,
+            hp : stats.Vig * 10 ,
             nom : nom , 
             classe : classe,
+            arme : arme ,
+            stats : stats 
         }
 
     }
 
-    fn Stats(&self) {
+    fn fiche(&self) {
+        println!("===============================");
+        println!("NOM : {}", self.nom);
+        println!("CLASSE : {:?}", self.classe);
+        println!("SANTÉ : {} HP", self.hp);
+        println!("ARME : {:?}", self.arme);
+        println!("DÉGÂTS ARME : {}", self.arme.weapondamage());
+        println!("-------------------------------");
 
-        let charact = &self.classe.basicStats().StatArray();
+        // On appelle la logique de Stats depuis ici
+        let noms = Stats::StrStats();
+        let valeurs = self.stats.IntStats();
 
-        for value in charact {
-            println!("{:?}" , value );
+        for (n, v) in noms.iter().zip(valeurs.iter()) {
+            println!("{:<12} : {}", n, v);
         }
+        println!("===============================");
     }
 
-    fn Hi(&self){
-        println!("Bonjour je suis {:?} je m'appelle {} et j'ai {:?} hp", &self.classe , &self.nom , &self.hp );
-    }
+
+
+
+
+   
 }
 
-
 fn main(){
+
     let picard : Personnage = Personnage::new(String::from("Picard") , Role::Chevalier );
+    let Firekeeper : Personnage = Personnage::new(String::from("Firekeeper") , Role::Clerc);
 
-    picard.Hi();
+    
+    Firekeeper.fiche();
 
-    picard.Stats();
+    picard.fiche();
+
+    
+
 }
