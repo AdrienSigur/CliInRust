@@ -8,8 +8,6 @@ enum Weapon {
 
 }
 
-
-
 impl Weapon {
 
 
@@ -25,6 +23,14 @@ impl Weapon {
     }
 }
 
+
+enum Monstre {
+        Gael ,
+        Friede , 
+        Artorias,
+        Manus ,
+        Gwyn 
+}
 
 // Statistiques du personnage 
 
@@ -120,7 +126,7 @@ impl Personnage {
             nom : nom , 
             classe : classe,
             arme : arme ,
-            stats : stats 
+            stats : stats
         }
 
     }
@@ -143,24 +149,48 @@ impl Personnage {
         }
         println!("===============================");
     }
+    
+
+    fn attack(&self, cible: &mut Personnage) {
+        let degats = self.stats.Force + self.arme.weapondamage();
+        cible.hp -= degats * 2 ;
+        println!("{} attaque {} et inflige {} dégâts !", self.nom, cible.nom, degats);
+    }
+
+    fn estus(&mut self){
+        let estus = 20 ;
+
+        let hpmax = self.stats.Vig * 10 ;
 
 
+        if self.hp + estus > hpmax {
+            self.hp = hpmax
+        }else{
+            self.hp += estus
+        }
+        
+        println!("{} boit fiole d'estus et régénérer Vie actuelle {}/{}" , self.nom , self.hp , hpmax );
+    }
 
-
-
-   
 }
 
 fn main(){
 
-    let picard : Personnage = Personnage::new(String::from("Picard") , Role::Chevalier );
-    let Firekeeper : Personnage = Personnage::new(String::from("Firekeeper") , Role::Clerc);
+    let mut picard : Personnage = Personnage::new(String::from("Picard") , Role::Chevalier );
+    let mut Firekeeper : Personnage = Personnage::new(String::from("Firekeeper") , Role::Clerc);
 
     
     Firekeeper.fiche();
 
     picard.fiche();
 
-    
+
+    Firekeeper.attack(&mut picard);
+
+    picard.fiche(); 
+
+    picard.estus();
+
+   
 
 }
